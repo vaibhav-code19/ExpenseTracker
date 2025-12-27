@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💰 Expense Tracker - Personal Finance Manager</title>
+  
+  <!-- Tailwind CSS for quick styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Chart.js for pie chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <link rel="stylesheet" href="style1.css">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+  
+  <div class="container mx-auto px-4 py-8 max-w-7xl">
+    
+    <!-- Header -->
+    <header class="text-center mb-12">
+      <h1 class="text-5xl font-bold text-blue-600 mb-3 animate-pulse">
+        💰 Expense Tracker
+      </h1>
+      <p class="text-xl text-gray-600">
+        Track your income and expenses with real-time cloud sync
+      </p>
+    </header>
+
+    <!-- Main Grid: Form on left, Chart on right -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Left Section: Form and Summary -->
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- Add Transaction Form -->
+        <section class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-shadow">
+          <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            ➕ Add New Transaction
+          </h2>
+          
+          <form id="transactionForm" class="space-y-6">
+            
+            <!-- Row 1: Amount and Category -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              <!-- Amount -->
+              <div class="form-group">
+                <label for="amount" class="block text-sm font-semibold text-gray-700 mb-2">
+                  Amount (₹)
+                </label>
+                <input
+                  type="number"
+                  id="amount"
+                  placeholder="0.00"
+                  step="0.01"
+                  min="0"
+                  required
+                  class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+                />
+                <small class="text-gray-500">Enter transaction amount</small>
+              </div>
+
+              <!-- Category -->
+              <div class="form-group">
+                <label for="category" class="block text-sm font-semibold text-gray-700 mb-2">
+                  Category
+                </label>
+                <select
+                  id="category"
+                  required
+                  class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+                >
+                  <option value="">-- Select Category --</option>
+                  <option value="Food">🍔 Food & Dining</option>
+                  <option value="Transport">🚗 Transport</option>
+                  <option value="Entertainment">🎬 Entertainment</option>
+                  <option value="Utilities">💡 Utilities</option>
+                  <option value="Healthcare">🏥 Healthcare</option>
+                  <option value="Education">📚 Education</option>
+                  <option value="Shopping">🛍️ Shopping</option>
+                  <option value="Salary">💰 Salary (Income)</option>
+                  <option value="Bonus">🎉 Bonus (Income)</option>
+                  <option value="Other">📌 Other</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Row 2: Type and Date -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              <!-- Type -->
+              <div class="form-group">
+                <label for="type" class="block text-sm font-semibold text-gray-700 mb-2">
+                  Type
+                </label>
+                <select
+                  id="type"
+                  required
+                  class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+                >
+                  <option value="expense">📉 Expense (Money Out)</option>
+                  <option value="income">📈 Income (Money In)</option>
+                </select>
+              </div>
+
+              <!-- Date -->
+              <div class="form-group">
+                <label for="date" class="block text-sm font-semibold text-gray-700 mb-2">
+                  Date
+                </label>
+                <input
+                  type="date"
+                  id="date"
+                  required
+                  class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+                />
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+              <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">
+                Description
+              </label>
+              <input
+                type="text"
+                id="description"
+                placeholder="e.g., Lunch at restaurant, Monthly salary"
+                required
+                class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
+              />
+            </div>
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95"
+            >
+              ✅ Add Transaction
+            </button>
+          </form>
+        </section>
+
+        <!-- Summary Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Total Income -->
+          <div class="bg-gradient-to-br from-green-400 to-green-600 rounded-2xl shadow-lg p-6 text-white">
+            <p class="text-sm font-semibold mb-2 opacity-90">Total Income</p>
+            <p id="totalIncome" class="text-4xl font-bold">₹0.00</p>
+            <p class="text-xs mt-2 opacity-75">Money coming in</p>
+          </div>
+
+          <!-- Total Expense -->
+          <div class="bg-gradient-to-br from-red-400 to-red-600 rounded-2xl shadow-lg p-6 text-white">
+            <p class="text-sm font-semibold mb-2 opacity-90">Total Expense</p>
+            <p id="totalExpense" class="text-4xl font-bold">₹0.00</p>
+            <p class="text-xs mt-2 opacity-75">Money going out</p>
+          </div>
+
+          <!-- Balance -->
+          <div class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl shadow-lg p-6 text-white">
+            <p class="text-sm font-semibold mb-2 opacity-90">Balance</p>
+            <p id="balance" class="text-4xl font-bold">₹0.00</p>
+            <p class="text-xs mt-2 opacity-75">Income - Expense</p>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Right Section: Chart -->
+      <div class="lg:col-span-1">
+        <section class="bg-white rounded-2xl shadow-xl p-8 h-full flex flex-col">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">📊 Spending by Category</h2>
+          
+          <div class="flex-1 flex items-center justify-center">
+            <canvas id="categoryChart" class="max-w-sm"></canvas>
+          </div>
+          
+          <p id="noChartData" class="text-center text-gray-500 text-sm mt-4">
+            Add expenses to see chart
+          </p>
+        </section>
+      </div>
+
+    </div>
+
+    <!-- Transaction List Section -->
+    <section class="mt-12 bg-white rounded-2xl shadow-xl p-8">
+      
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+        <h2 class="text-3xl font-bold text-gray-800">📋 All Transactions</h2>
+        
+        <div class="flex gap-3 flex-col md:flex-row">
+          <!-- Filter -->
+          <select
+            id="filterCategory"
+            class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+          >
+            <option value="">All Categories</option>
+            <option value="Food">🍔 Food</option>
+            <option value="Transport">🚗 Transport</option>
+            <option value="Entertainment">🎬 Entertainment</option>
+            <option value="Utilities">💡 Utilities</option>
+            <option value="Healthcare">🏥 Healthcare</option>
+            <option value="Education">📚 Education</option>
+            <option value="Shopping">🛍️ Shopping</option>
+            <option value="Salary">💰 Salary</option>
+            <option value="Bonus">🎉 Bonus</option>
+            <option value="Other">📌 Other</option>
+          </select>
+          
+          <!-- Export Button -->
+          <button
+            onclick="exportToCSV()"
+            class="px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition-colors"
+          >
+            📥 Export CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-200 border-b-2 border-gray-400">
+            <tr>
+              <th class="px-6 py-3 text-left font-bold text-gray-800">Date</th>
+              <th class="px-6 py-3 text-left font-bold text-gray-800">Description</th>
+              <th class="px-6 py-3 text-left font-bold text-gray-800">Category</th>
+              <th class="px-6 py-3 text-left font-bold text-gray-800">Type</th>
+              <th class="px-6 py-3 text-right font-bold text-gray-800">Amount</th>
+              <th class="px-6 py-3 text-center font-bold text-gray-800">Action</th>
+            </tr>
+          </thead>
+          <tbody id="transactionTable">
+          </tbody>
+        </table>
+      </div>
+
+      <p id="noTransactions" class="text-center text-gray-500 py-8 text-lg">
+        No transactions yet. Start by adding one above! ⬆️
+      </p>
+    </section>
+
+  </div>
+
+  <!-- Firebase SDK (using ES6 modules) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      getDocs,
+      deleteDoc,
+      doc,
+      onSnapshot
+    } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    // ===== REPLACE WITH YOUR FIREBASE CONFIG =====
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Make global so script.js can access
+    window.db = db;
+    window.addDoc = addDoc;
+    window.getDocs = getDocs;
+    window.deleteDoc = deleteDoc;
+    window.doc = doc;
+    window.collection = collection;
+    window.onSnapshot = onSnapshot;
+  </script>
+
+  <!-- Main app logic -->
+  <script src="script1.js"></script>
+
+</body>
+</html>

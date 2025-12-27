@@ -1,0 +1,55 @@
+/* Smooth scrolling */
+html {
+scroll-behavior: smooth;
+}
+/* Remove number input spinners */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+/* Form input styles */
+input, select {
+font-size: 16px;
+transition: all 0.3s ease;
+}
+input:focus, select:focus {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+/* Button animations */
+button {
+transition: all 0.3s ease;
+}
+button:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+button:active {
+transform: translateY(0);
+}
+/* Table row hover */
+tbody tr {
+transition: background-color 0.2s ease;
+}
+tbody tr:hover {
+background-color: #f3f4f6;
+}
+/* Mobile responsive */
+@media (max-width: 768px) {
+h1 {
+font-size: 1.75rem;
+}
+.grid-cols-3 {
+grid-template-columns: 1fr;
+}
+}
+/* Print styles */
+@media print {
+button, .no-print {
+display: none;
+}
+body {
+background: white;
+}
+}
