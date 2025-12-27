@@ -14,7 +14,8 @@
   <link rel="stylesheet" href="style1.css">
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-  
+  <button onclick="testFirestore()">Test Firestore</button>
+
   <div class="container mx-auto px-4 py-8 max-w-7xl">
     
     <!-- Header -->
@@ -188,7 +189,12 @@
 
     <!-- Transaction List Section -->
     <section class="mt-12 bg-white rounded-2xl shadow-xl p-8">
-      
+      <button
+      id="testBtn"
+      class="mt-4 px-4 py-2 bg-black text-white rounded"
+      >
+      Test Firestore
+      </button>
       <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
         <h2 class="text-3xl font-bold text-gray-800">📋 All Transactions</h2>
         
@@ -259,15 +265,16 @@
       onSnapshot
     } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-    // ===== REPLACE WITH YOUR FIREBASE CONFIG =====
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT.appspot.com",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBwzAvf2ghXLrgGc0xJm9S5RJnD7wqGn0Q",
+  authDomain: "expensetracker-func10n.firebaseapp.com",
+  projectId: "expensetracker-func10n",
+  storageBucket: "expensetracker-func10n.firebasestorage.app",
+  messagingSenderId: "916672175754",
+  appId: "1:916672175754:web:985272205c7b639e3a5773",
+  measurementId: "G-YT2021EP78"
+};
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);

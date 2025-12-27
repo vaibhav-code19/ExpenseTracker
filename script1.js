@@ -20,7 +20,7 @@ let categoryChart = null;
 // ============================================
 // DOM REFERENCES (Cache for performance)
 // ============================================
-
+const db = window.db;
 const transactionForm = document.getElementById("transactionForm");
 const amountInput = document.getElementById("amount");
 const categoryInput = document.getElementById("category");
@@ -538,4 +538,9 @@ function formatDate(dateString) {
     month: "short",
     year: "numeric"
   });
+
+function testFirestore() {
+    alert("Firestore button clicked!");
+}
+
 }
